@@ -12,10 +12,9 @@ venv/
 Thumbs.db
 
 # Ket qua duoc sinh tu dong
-bai_1/ket_qua/
-bai_2/ket_qua_bo_loc/
-bai_2/ket_qua_so_sanh_opencv/
-bai_2/output/
+bai_thuc_hanh_2/ket_qua_bo_loc/
+bai_thuc_hanh_2/ket_qua_so_sanh_opencv/
+bai_thuc_hanh_2/output/
 
 # Tai lieu bao cao ca nhan
 *.docx

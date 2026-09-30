@@ -1,27 +1,29 @@
-# Thực hành Xử lý ảnh – Bài 1 và Bài 2
+# Bài thực hành 2 – Các bộ lọc ảnh
 
-Repository chứa mã nguồn hai bài thực hành môn **Xử lý ảnh – Thị giác Robot**.
+Repository chứa mã nguồn **Bài thực hành số 2** của môn Xử lý ảnh – Thị giác
+Robot. Nội dung chính là tự xây dựng các bộ lọc làm trơn, khử nhiễu và phát hiện
+biên, sau đó đối chiếu kết quả với OpenCV.
 
-- **Bài 1:** đọc ảnh, chuyển đổi hệ màu, tạo ảnh âm bản và xử lý video raw YUV420.
-- **Bài 2:** tự xây dựng các bộ lọc Mean, Median, Gaussian, Sobel, Canny và so sánh với OpenCV.
+## Nội dung bài thực hành
 
-Các thuật toán lọc ở Bài 2 được cài đặt bằng NumPy. OpenCV không được dùng thay
-cho thuật toán tự xây dựng; thư viện chỉ được dùng để đọc/ghi, hiển thị hoặc tạo
-kết quả đối chiếu khi đề bài yêu cầu.
+- Bộ lọc trung bình (Mean).
+- Bộ lọc trung vị (Median).
+- Bộ lọc Gaussian.
+- Bộ lọc Sobel.
+- Bộ lọc Canny.
+- Thử nghiệm kernel `3×3`, `5×5`, `7×7`.
+- So sánh kết quả tự xây dựng với OpenCV bằng MAE, tỷ lệ pixel giống nhau,
+  Precision, Recall, IoU và Dice.
+
+Các thuật toán được cài đặt bằng NumPy. OpenCV không được dùng thay cho các bộ
+lọc tự xây dựng; thư viện chỉ được dùng để hiển thị, lưu ảnh hoặc tạo kết quả đối
+chiếu khi đề bài yêu cầu.
 
 ## Cấu trúc repository
 
 ```text
 filters_images/
-├── bai_1/
-│   ├── bai1_doc_anh_he_mau.py
-│   ├── bai2_bien_doi_anh.py
-│   ├── bai3_video_yuv420.py
-│   ├── xu_ly_anh_co_ban.py
-│   ├── xem_file_yuv.py
-│   ├── RaceHorses_416x240_frame001.png
-│   └── RaceHorses_416x240_20.yuv
-├── bai_2/
+├── bai_thuc_hanh_2/
 │   ├── bo_loc_anh_tong_hop.py
 │   ├── bo_loc_utils.py
 │   ├── chay_tat_ca_bo_loc.py
@@ -39,7 +41,10 @@ filters_images/
 ## Yêu cầu môi trường
 
 - Python 3.10 trở lên.
-- Các thư viện trong `requirements.txt`.
+- NumPy.
+- Pillow.
+- Matplotlib.
+- OpenCV Python.
 
 ## Cài đặt
 
@@ -56,7 +61,7 @@ Tạo môi trường ảo:
 python -m venv .venv
 ```
 
-Kích hoạt trên Windows PowerShell:
+Kích hoạt môi trường ảo trên Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
@@ -68,99 +73,42 @@ Trên Linux hoặc macOS:
 source .venv/bin/activate
 ```
 
-Cài thư viện:
+Cài đặt thư viện:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-## Hướng dẫn chạy Bài 1
-
-Di chuyển vào thư mục Bài 1:
+Di chuyển vào thư mục bài thực hành:
 
 ```bash
-cd bai_1
+cd bai_thuc_hanh_2
 ```
 
-### 1. Đọc ảnh và hiển thị các hệ màu
+## 1. Chạy Mean, Median và Gaussian
 
-```bash
-python bai1_doc_anh_he_mau.py
-```
-
-Chương trình đọc ảnh đầu vào và biểu diễn ở các hệ màu RGB, BGR, YUV, HSV và
-grayscale.
-
-### 2. Biến đổi âm bản
-
-```bash
-python bai2_bien_doi_anh.py
-```
-
-Mỗi pixel được biến đổi theo công thức:
-
-```text
-pixel_moi = 255 - pixel_cu
-```
-
-### 3. Đọc video raw YUV420
-
-```bash
-python bai3_video_yuv420.py
-```
-
-Chương trình đọc toàn bộ 20 frame của file `RaceHorses_416x240_20.yuv`, chuyển
-từ YUV420 sang RGB và tạo ảnh âm bản cho từng frame.
-
-Có thể đọc riêng một frame:
-
-```bash
-python xem_file_yuv.py --frame 0
-```
-
-### 4. Chạy chương trình tổng hợp Bài 1
-
-```bash
-python xu_ly_anh_co_ban.py
-```
-
-Muốn mở cửa sổ xem kết quả:
-
-```bash
-python xu_ly_anh_co_ban.py --show
-```
-
-Kết quả Bài 1 được tạo trong thư mục `bai_1/ket_qua/`.
-
-## Hướng dẫn chạy Bài 2
-
-Từ thư mục gốc của repository:
-
-```bash
-cd bai_2
-```
-
-### 1. Chạy Mean, Median và Gaussian
-
-Chạy tất cả bằng một file độc lập:
+### Chạy bằng một file tổng hợp
 
 ```bash
 python bo_loc_anh_tong_hop.py
 ```
 
-Chương trình xử lý `noisy_image.jpg` và `noisy_image2.jpg` với các kernel:
+Chương trình xử lý `noisy_image.jpg` và `noisy_image2.jpg` bằng ba bộ lọc với các
+kernel:
 
 - `3×3`: giảm nhiễu nhẹ, giữ nhiều chi tiết.
-- `5×5`: cân bằng giữa giảm nhiễu và giữ chi tiết.
+- `5×5`: cân bằng giữa giảm nhiễu và bảo toàn chi tiết.
 - `7×7`: giảm nhiễu mạnh nhưng làm ảnh mờ hơn.
 
-Kết quả được lưu tại:
+Kết quả được lưu trong:
 
 ```text
-bai_2/ket_qua_bo_loc/
+ket_qua_bo_loc/
 ```
 
-Ngoài ra có thể chạy phiên bản chia thành nhiều file:
+### Chạy phiên bản chia thành nhiều file
+
+Chạy cả ba bộ lọc:
 
 ```bash
 python chay_tat_ca_bo_loc.py
@@ -174,52 +122,69 @@ python trungvi_Filter.py
 python gau_Filter.py
 ```
 
-### 2. Chạy Sobel và Canny trên ma trận
+Các file trên sử dụng chung các hàm trong `bo_loc_utils.py`.
+
+## 2. Chạy Sobel và Canny trên ma trận
 
 ```bash
 python sobel_canny.py
 ```
 
-Chương trình thực hiện:
+Chương trình tự thực hiện các bước:
 
-1. Sobel theo hai hướng `Gx`, `Gy`.
-2. Tính độ lớn và hướng gradient.
-3. Canny gồm Gaussian, Sobel, non-maximum suppression, ngưỡng kép và hysteresis.
+1. Thêm biên 0 cho ma trận.
+2. Tính Sobel theo hai hướng `Gx`, `Gy`.
+3. Tính độ lớn và hướng gradient.
+4. Làm mờ Gaussian cho Canny.
+5. Non-maximum suppression.
+6. Phân ngưỡng kép.
+7. Hysteresis để nối cạnh yếu với cạnh mạnh.
 
-Nhấn phím bất kỳ trên cửa sổ kết quả để kết thúc chương trình. Ảnh được lưu vào:
+Nhấn phím bất kỳ trên cửa sổ kết quả để thoát. Kết quả được lưu trong:
 
 ```text
-bai_2/output/
+output/
 ```
 
-### 3. So sánh bản tự xây dựng với OpenCV
+## 3. So sánh với OpenCV
 
 ```bash
 python so_sanh_tu_xay_dung_opencv.py
 ```
 
-Chương trình so sánh Mean, Median, Gaussian, Sobel và Canny bằng các chỉ số:
+Chương trình đối chiếu Mean, Median, Gaussian, Sobel và Canny tự xây dựng với các
+hàm tương ứng của OpenCV.
 
-- MAE – sai số tuyệt đối trung bình.
-- Sai khác pixel lớn nhất.
-- Tỷ lệ pixel giống nhau.
-- Precision, Recall, IoU và Dice đối với bản đồ cạnh Canny.
+Các chỉ số được sử dụng:
 
-Ảnh và bảng CSV được lưu vào:
+- **MAE:** sai số tuyệt đối trung bình.
+- **Sai khác lớn nhất:** chênh lệch pixel lớn nhất giữa hai kết quả.
+- **Tỷ lệ pixel giống nhau:** phần trăm pixel có cùng giá trị.
+- **Precision, Recall, IoU, Dice:** đánh giá riêng bản đồ cạnh Canny.
+
+Ảnh so sánh và bảng CSV được lưu trong:
 
 ```text
-bai_2/ket_qua_so_sanh_opencv/
+ket_qua_so_sanh_opencv/
 ```
 
-## Ghi chú
+## Nhận xét ngắn
 
-- Phải chạy lệnh từ đúng thư mục `bai_1` hoặc `bai_2` để chương trình tìm thấy
-  các file đầu vào theo đường dẫn tương đối.
-- Các thư mục kết quả được tạo tự động và không được lưu trên Git để repository
-  gọn nhẹ.
-- `sobel_canny.py` mở cửa sổ đồ họa, vì vậy cần môi trường desktop để quan sát.
-- Nếu dùng máy chủ không có giao diện, có thể bỏ phần `cv2.imshow()` và chỉ lưu
-  ảnh kết quả.
+- Mean đơn giản nhưng làm mờ cạnh và chi tiết.
+- Median phù hợp nhất với nhiễu muối–tiêu.
+- Gaussian phù hợp với nhiễu Gaussian và làm mượt tự nhiên hơn Mean.
+- Sobel tính được độ lớn và hướng gradient nhưng tạo cạnh tương đối dày.
+- Canny tạo cạnh mảnh và liên tục hơn nhờ Gaussian, NMS, ngưỡng kép và
+  hysteresis.
+- Kernel càng lớn thì khả năng giảm nhiễu càng mạnh, nhưng ảnh càng mất chi tiết.
+
+## Lưu ý
+
+- Cần chạy lệnh từ thư mục `bai_thuc_hanh_2` để chương trình tìm đúng hai ảnh đầu
+  vào theo đường dẫn tương đối.
+- Các thư mục kết quả được tạo tự động và không được lưu lên GitHub.
+- `sobel_canny.py` sử dụng cửa sổ OpenCV để hiển thị, vì vậy cần môi trường
+  desktop.
 
 ## Tác giả
 
