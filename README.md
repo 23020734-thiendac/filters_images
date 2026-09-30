@@ -177,16 +177,3 @@ ket_qua_so_sanh_opencv/
 - Canny tạo cạnh mảnh và liên tục hơn nhờ Gaussian, NMS, ngưỡng kép và
   hysteresis.
 - Kernel càng lớn thì khả năng giảm nhiễu càng mạnh, nhưng ảnh càng mất chi tiết.
-
-## Lưu ý
-
-- Cần chạy lệnh từ thư mục `bai_thuc_hanh_2` để chương trình tìm đúng hai ảnh đầu
-  vào theo đường dẫn tương đối.
-- Các thư mục kết quả được tạo tự động và không được lưu lên GitHub.
-- `sobel_canny.py` sử dụng cửa sổ OpenCV để hiển thị, vì vậy cần môi trường
-  desktop.
-
-## Tác giả
-
-- Mã sinh viên: **23020734**
-- GitHub: [23020734-thiendac](https://github.com/23020734-thiendac)
